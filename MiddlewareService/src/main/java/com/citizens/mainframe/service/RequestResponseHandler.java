@@ -49,7 +49,7 @@ public class RequestResponseHandler {
 	
 	
 	
-	public Object callMq() throws IOException, javax.jms.JMSException{
+	public String callMq() throws IOException, javax.jms.JMSException{
 		
 		
 		
@@ -150,7 +150,7 @@ public class RequestResponseHandler {
 		try {
 			String correlationId = sender.sendMessageToQueue();
 			System.out.println("Request Sent to mainframe with message ID :"+"/"+correlationId+"/ \n");
-			Object response = receiver.receiveMessageByCorrelationId(correlationId, responseBaseModel);
+			String response = receiver.receiveMessageByCorrelationId(correlationId, responseBaseModel);
 			return response;
 		}
 		catch (JmsException e) {

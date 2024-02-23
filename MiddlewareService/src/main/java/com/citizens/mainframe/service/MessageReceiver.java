@@ -17,6 +17,10 @@ import com.ibm.jms.JMSBytesMessage;
 import com.ibm.msg.client.jakarta.jms.JmsMessage;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import jakarta.jms.BytesMessage;
 import jakarta.jms.JMSException;
@@ -35,6 +39,12 @@ public class MessageReceiver {
 	@Autowired
 	EbcdicToJson ebcdicTojson;
 	
+	@Autowired
+	ParseCopybook copybookParser;
+	
+	@Autowired
+	private ebcdic2json2 e2j;
+	
 	
 	private final JmsTemplate jmsTemplate;
 
@@ -44,7 +54,7 @@ public class MessageReceiver {
 		this.jmsTemplate = jmsTemplate;
 	}
 
-	public Object receiveMessageByCorrelationId(String correlationId ,ResponseBaseModel responseBaseModel)
+	public String receiveMessageByCorrelationId(String correlationId ,ResponseBaseModel responseBaseModel)
 			throws jakarta.jms.JMSException, IOException, javax.jms.JMSException {
 		jmsTemplate.setReceiveTimeout(20000);
 
@@ -57,19 +67,47 @@ public class MessageReceiver {
 
 		if (receivedMessage != null) {
 
-//			
+			long bodyLength = receivedMessage.getBodyLength();
+			System.out.println("received message body lenght is : ------> "+ bodyLength);
 
 			byte[] bytes = new byte[(int) receivedMessage.getBodyLength()];
+			System.out.println("bytes length is : "+ bytes.length);
+			
+			
 			receivedMessage.readBytes(bytes);
 //			System.out.println(bytes);
 //			for (byte b : bytes)
 //				System.out.println(b);
-			JsonObject json=ebcdicTojson.mainframe2json(bytes, responseBaseModel);
-			return json;
+//			JsonObject json=ebcdicTojson.mainframe2json(bytes, responseBaseModel);
+			ArrayList<HashMap<String, String>> copybookToIntermediate = copybookParser.copybookToIntermediate("customer.cpy");
+			List<Map<String, String>> copybookToListOfHash = printCopybook(copybookToIntermediate);
+			String convertToJSON = e2j.convertToJSON(bytes, copybookToListOfHash);
+			//return convertToJSON;
+			JsonObject json= ebcdicTojson.mainframe2json(bytes, responseBaseModel);
+			return json.toString();
+			
 
 		} else
 			return null;
 	}
+	
+	public List<Map<String, String>> printCopybook(List<HashMap<String, String>> copybook) {
+        List<Map<String, String>> copybookToListOfMap = new ArrayList<>();
+        System.out.println("----------------------------------------------------------------");
+        for (HashMap<String, String> field : copybook) {
+            Map<String, String> tempMap = new HashMap<>();
+            
+            System.out.println("Field:");
+            for (Map.Entry<String, String> entry : field.entrySet()) {
+                tempMap.put(entry.getKey(), entry.getValue());
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+            copybookToListOfMap.add(tempMap);
+            System.out.println();
+        }
+        System.out.println("--------------------------------------------------------------------------------");
+        return copybookToListOfMap;
+    }
 
 
 }

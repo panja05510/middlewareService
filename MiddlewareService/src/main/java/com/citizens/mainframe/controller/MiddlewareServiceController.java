@@ -4,23 +4,26 @@ import java.io.IOException;
 
 import javax.jms.JMSException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.citizens.mainframe.service.RequestResponseHandler;
 
 
-@Controller
-@RequestMapping("/")
+@RestController
 public class MiddlewareServiceController {
+	@Autowired
 	RequestResponseHandler requestResponseHandler;
 
 	
-	@GetMapping("request")
+	@GetMapping("/result")
 	public String mainframeResponse() throws IOException, JMSException {
-		Object obj=requestResponseHandler.callMq();
-		return obj.toString();
+		String obj=requestResponseHandler.callMq();
+		System.out.println(obj);
+		return obj;
 		
 	}
 	
