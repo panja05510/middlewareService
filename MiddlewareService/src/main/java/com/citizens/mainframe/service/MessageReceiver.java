@@ -75,10 +75,10 @@ public class MessageReceiver {
 //			for (byte b : bytes)
 //				System.out.println(b);
 //			JsonObject json=ebcdicTojson.mainframe2json(bytes, responseBaseModel);
-			ArrayList<HashMap<String, String>> copybookToIntermediate = copybookParser
-					.copybookToIntermediate("customer.cpy");
-			List<Map<String, String>> copybookToListOfHash = printCopybook(copybookToIntermediate);
-			String convertToJSON = e2j.convertToJSON(bytes, copybookToListOfHash);
+//			ArrayList<HashMap<String, String>> copybookToIntermediate = copybookParser
+//					.copybookToIntermediate("customer.cpy");
+//			List<Map<String, String>> copybookToListOfHash = printCopybook(copybookToIntermediate);
+//			String convertToJSON = e2j.convertToJSON(bytes, copybookToListOfHash);
 			// return convertToJSON;
 			JsonObject json = ebcdicTojson.mainframe2json(bytes, responseBaseModel);
 			return json.toString();
