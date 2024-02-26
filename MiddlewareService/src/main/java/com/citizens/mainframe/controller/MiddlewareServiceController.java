@@ -21,6 +21,7 @@ public class MiddlewareServiceController {
 	
 	@GetMapping("/result")
 	public String mainframeResponse() throws IOException, JMSException {
+		System.out.println("request received at controller...");
 		String obj=requestResponseHandler.callMq();
 		System.out.println(obj);
 		return obj;

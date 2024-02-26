@@ -51,12 +51,6 @@ public class RequestResponseHandler {
 	
 	public String callMq() throws IOException, javax.jms.JMSException{
 		
-		
-		
-		//if
-		
-		
-		
 		if (responseBaseModel.getApiName() == null) {
 			System.out.println("rsponse model is null");
 			responseBaseModel.setApiName("savings/closing-balance/query");
@@ -142,6 +136,10 @@ public class RequestResponseHandler {
 	        
 	        
 
+		}
+		
+		else {
+			System.out.println("******************************************************** values read from .yml successfully......*********************************************");
 		}
 		
 		

@@ -2,11 +2,18 @@ package com.citizens.mainframe.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Map;
 
+@ComponentScan
+@Getter
+@Setter
 @Component
 @ConfigurationProperties("savingsclosingbalancequeryresponse")
 public class ResponseBaseModel implements Serializable {
