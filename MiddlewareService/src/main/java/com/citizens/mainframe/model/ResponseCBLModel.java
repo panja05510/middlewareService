@@ -10,42 +10,39 @@ import java.util.Map;
 @Scope(value = "prototype")
 public class ResponseCBLModel implements Serializable {
 
-private Map<String, String> leaves;
-private List<String> parents;
-private List<String> hexFields;
+	private Map<String, String> leaves;
+	private List<String> parents;
+	private List<String> hexFields;
 
-public Map<String, String> getLeaves() {
-	return leaves;
-}
+	public Map<String, String> getLeaves() {
+		return leaves;
+	}
 
-public void setLeaves(Map<String, String> leaves) {
-	this.leaves = leaves;
-}
+	public void setLeaves(Map<String, String> leaves) {
+		this.leaves = leaves;
+	}
 
-public List<String> getParents() {
-	return parents;
-}
+	public List<String> getParents() {
+		return parents;
+	}
 
-public void setParents(List<String> parents) {
-	this.parents = parents;
-}
+	public void setParents(List<String> parents) {
+		this.parents = parents;
+	}
 
-public List<String> getHexFields() {
-	return hexFields;
-}
+	public List<String> getHexFields() {
+		return hexFields;
+	}
 
-public void setHexFields(List<String> hexFields) {
-	this.hexFields = hexFields;
-}
+	public void setHexFields(List<String> hexFields) {
+		this.hexFields = hexFields;
+	}
 
+	@Override
 
+	public String toString() {
 
-@Override
+		return "{" + this.getLeaves() + "," + this.getParents() + "}";
 
-public String toString() {
-
-return "{" + this.getLeaves()+","+this.getParents()+"}";
-		
-		
-}
+	}
 }

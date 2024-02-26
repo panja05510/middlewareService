@@ -13,24 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.citizens.mainframe.model.SavingsAccountDetails;
 import com.citizens.mainframe.service.RequestResponseHandler;
 
-
 @RestController
 @RequestMapping("/deposit-accounts-fees/savings/closing-balance")
 public class MiddlewareServiceController {
 	@Autowired
 	RequestResponseHandler requestResponseHandler;
 
-	
-	@PostMapping("/query" )
-	public String mainframeResponse( @RequestBody SavingsAccountDetails savingsAccountDetails) throws IOException, JMSException {
-		
+	@PostMapping("/query")
+	public String mainframeResponse(@RequestBody SavingsAccountDetails savingsAccountDetails)
+			throws IOException, JMSException {
+
 		System.out.println(savingsAccountDetails.toString());
-		String obj=requestResponseHandler.callMq(savingsAccountDetails);
-		 
+		String obj = requestResponseHandler.callMq(savingsAccountDetails);
+
 		return obj;
-		
+
 	}
-	
-	
 
 }

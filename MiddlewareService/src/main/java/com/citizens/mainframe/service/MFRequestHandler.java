@@ -6,23 +6,18 @@ import java.util.HashMap;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.citizens.mainframe.model.SavingsAccountDetails;
 
-
-
 @Component
 
 public class MFRequestHandler {
-	
-	
 
-	public HashMap<String, String> populateMap(SavingsAccountDetails savingsAccountDetails ) {
+	public HashMap<String, String> populateMap(SavingsAccountDetails savingsAccountDetails) {
 
 		HashMap<String, String> cobolConstants = new HashMap<>();
-		cobolConstants.put("ACC-NUMBER",savingsAccountDetails.getAccountNumber());
+		cobolConstants.put("ACC-NUMBER", savingsAccountDetails.getAccountNumber());
 		cobolConstants.put("WITHDRAWAL-TYPE", savingsAccountDetails.getWithdrawalType());
 		cobolConstants.put("SERVICE-NAME", "SAVINGS CLOSING BALANCE QUERY");
 		cobolConstants.put("ACAI-CHANNEL", "NNN");
@@ -32,15 +27,11 @@ public class MFRequestHandler {
 
 	}
 
-	
-
-	public List<String> hexFields(){
+	public List<String> hexFields() {
 
 		return new ArrayList<String>();
 
 	}
-
-	
 
 	public byte[] JsonToEbc(SavingsAccountDetails savingsAccountDetails) {
 
@@ -49,8 +40,6 @@ public class MFRequestHandler {
 		List<String> hexFields = hexFields();
 
 		String cobolFile = "customer.cpy";
-
-		
 
 		JsonToEbcdic j2e = new JsonToEbcdic(cobolConstants, hexFields);
 

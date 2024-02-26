@@ -55,8 +55,6 @@ public class ebcdic2json2 {
 		return jsonBuilder.toString();
 	}
 
-	
-	
 	public class JsonToMap {
 
 		public Map<String, String> convertToJson(String jsonData) throws JsonProcessingException {

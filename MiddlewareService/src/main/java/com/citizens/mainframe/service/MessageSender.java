@@ -21,22 +21,18 @@ import org.slf4j.LoggerFactory;
 @Service
 public class MessageSender {
 	private final JmsTemplate jmsTemplate;
-	
-	@Autowired 
-	MFRequestHandler mfRequestHandler;
 
+	@Autowired
+	MFRequestHandler mfRequestHandler;
 
 	public MessageSender(JmsTemplate jmsTemplate) {
 		this.jmsTemplate = jmsTemplate;
 	}
 
-	public String sendMessageToQueue(SavingsAccountDetails savingsAccountDetails) throws jakarta.jms.JMSException, IOException {
-		
-		
-			byte[] message = mfRequestHandler.JsonToEbc(savingsAccountDetails);
-			
-			
-		
+	public String sendMessageToQueue(SavingsAccountDetails savingsAccountDetails)
+			throws jakarta.jms.JMSException, IOException {
+
+		byte[] message = mfRequestHandler.JsonToEbc(savingsAccountDetails);
 
 		String[] correlationId = { "emptyString" }; // Using an array to make it mutable
 
@@ -49,7 +45,7 @@ public class MessageSender {
 				jmsMessage.setJMSType("1");
 
 				// Generating and set JMSCorrelationID
-				correlationId[0] = "200"+UUID.randomUUID().toString();
+				correlationId[0] = "200" + UUID.randomUUID().toString();
 //                System.out.println("correlationId: " + correlationId[0]);
 				jmsMessage.setJMSCorrelationID(correlationId[0]);
 				jmsMessage.setJMSMessageID(correlationId[0]);
@@ -70,7 +66,7 @@ public class MessageSender {
 	public void sendJmsMessage(BytesMessage jmsMessage, String queueName) {
 		jmsTemplate.convertAndSend(queueName, jmsMessage, mess -> {
 			jmsMessage.setIntProperty("JMS_IBM_MQMD_MsgType", 1);
-			
+
 //    		System.out.println("jmsmessage from sendjmsMessage: "+jmsMessage);
 //			logger.info("Message Sender    msg send to DEV.QUEUE.1    corrId {} Time : {}",
 //					jmsMessage.getJMSCorrelationID(), messageSenderTime);
