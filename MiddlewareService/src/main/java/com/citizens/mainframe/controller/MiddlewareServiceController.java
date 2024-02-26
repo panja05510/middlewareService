@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.citizens.mainframe.model.SavingsAccountDetails;
+import com.citizens.mainframe.model.SavingsBalanceResponseModel;
 import com.citizens.mainframe.service.RequestResponseHandler;
 
 @RestController
 @RequestMapping("/deposit-accounts-fees/savings/closing-balance")
 public class MiddlewareServiceController {
+	@Autowired
+	SavingsBalanceResponseModel savingsBalanceResponseModel;
+	
 	@Autowired
 	RequestResponseHandler requestResponseHandler;
 

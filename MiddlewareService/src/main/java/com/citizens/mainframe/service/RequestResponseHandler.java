@@ -25,9 +25,9 @@ public class RequestResponseHandler {
 
 	@Autowired
 	ResponseCBLModel responseCBLModel;
-
-	ResponseBaseModel responseBaseModel = new ResponseBaseModel();
-
+	
+	@Autowired
+	ResponseBaseModel responseBaseModel;
 	Map<String, Map<String, String>> copybooks = new HashMap<>();
 
 	@Autowired
@@ -63,7 +63,7 @@ public class RequestResponseHandler {
 			// Entry with key 3056
 			Map<String, String> entry3056 = new HashMap<>();
 			entry3056.put("responseType", "error");
-			entry3056.put("copybookName", "response.cpy");
+			entry3056.put("copybookName", "error.cpy");
 			copybooks.put("3056", entry3056);
 			responseBaseModel.setCopybooks(copybooks);
 
@@ -132,12 +132,10 @@ public class RequestResponseHandler {
 			String response = receiver.receiveMessageByCorrelationId(correlationId, responseBaseModel);
 			return response;
 		} catch (JmsException e) {
-			// System.out.println("jmsException occur at RequestRespondHandler.java");
+			System.out.println(e.getMessage());
 
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-
+			System.out.println(e.getMessage());
 		}
 		return "exception occur";
 	}
