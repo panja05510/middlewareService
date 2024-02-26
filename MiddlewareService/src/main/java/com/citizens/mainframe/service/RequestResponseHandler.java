@@ -51,19 +51,19 @@ public class RequestResponseHandler {
 			// Default entry
 			Map<String, String> defaultEntry = new HashMap<>();
 			defaultEntry.put("responseType", "error");
-			defaultEntry.put("copybookName", "customer.cpy");
+			defaultEntry.put("copybookName", "response.cpy");
 			copybooks.put("default", defaultEntry);
 
 			// Entry with key 2649
 			Map<String, String> entry2649 = new HashMap<>();
 			entry2649.put("responseType", "success");
-			entry2649.put("copybookName", "customer.cpy");
+			entry2649.put("copybookName", "response.cpy");
 			copybooks.put("181", entry2649);
 
 			// Entry with key 3056
 			Map<String, String> entry3056 = new HashMap<>();
 			entry3056.put("responseType", "error");
-			entry3056.put("copybookName", "customer.cpy");
+			entry3056.put("copybookName", "response.cpy");
 			copybooks.put("3056", entry3056);
 			responseBaseModel.setCopybooks(copybooks);
 
