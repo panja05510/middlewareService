@@ -6,30 +6,28 @@ import java.util.HashMap;
 
 import java.util.List;
 
-
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.citizens.mainframe.model.SavingsAccountDetails;
 
 
 
 @Component
 
 public class MFRequestHandler {
-
+	
 	
 
-	public HashMap<String, String> populateMap() {
+	public HashMap<String, String> populateMap(SavingsAccountDetails savingsAccountDetails ) {
 
 		HashMap<String, String> cobolConstants = new HashMap<>();
-		cobolConstants.put("SDSTMYM1-EXT-AMT", "3578");
-		cobolConstants.put("SDSTMYM1-EXT-AMT-LIT", "ACAI");
-		cobolConstants.put("ACAI-SERVICE-NAME", "ACCOUNT CLOSING BALANCE INQUIRE");
-
+		cobolConstants.put("ACC-NUMBER",savingsAccountDetails.getAccountNumber());
+		cobolConstants.put("WITHDRAWAL-TYPE", savingsAccountDetails.getWithdrawalType());
+		cobolConstants.put("SERVICE-NAME", "SAVINGS CLOSING BALANCE QUERY");
+		cobolConstants.put("ACAI-CHANNEL", "NNN");
 		cobolConstants.put("ACAI-SESSION-ID", "UNKNOWN");
-
-		cobolConstants.put("ACAI-SESSION-ARCHIVE", "Y");
-
+		cobolConstants.put("ACAI-USER-ID", "UNKNOWN");
 		return cobolConstants;
 
 	}
@@ -44,9 +42,9 @@ public class MFRequestHandler {
 
 	
 
-	public byte[] JsonToEbc() {
+	public byte[] JsonToEbc(SavingsAccountDetails savingsAccountDetails) {
 
-		HashMap<String, String> cobolConstants = populateMap();
+		HashMap<String, String> cobolConstants = populateMap(savingsAccountDetails);
 
 		List<String> hexFields = hexFields();
 

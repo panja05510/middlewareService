@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-
+import com.citizens.mainframe.model.SavingsAccountDetails;
 
 import jakarta.jms.BytesMessage;
 import lombok.extern.log4j.Log4j2;
@@ -21,8 +21,6 @@ import org.slf4j.LoggerFactory;
 @Service
 public class MessageSender {
 	private final JmsTemplate jmsTemplate;
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private Instant messageSenderTime;
 	
 	@Autowired 
 	MFRequestHandler mfRequestHandler;
@@ -32,10 +30,10 @@ public class MessageSender {
 		this.jmsTemplate = jmsTemplate;
 	}
 
-	public String sendMessageToQueue() throws jakarta.jms.JMSException, IOException {
+	public String sendMessageToQueue(SavingsAccountDetails savingsAccountDetails) throws jakarta.jms.JMSException, IOException {
 		
 		
-			byte[] message = mfRequestHandler.JsonToEbc();
+			byte[] message = mfRequestHandler.JsonToEbc(savingsAccountDetails);
 			
 			
 		
@@ -72,8 +70,7 @@ public class MessageSender {
 	public void sendJmsMessage(BytesMessage jmsMessage, String queueName) {
 		jmsTemplate.convertAndSend(queueName, jmsMessage, mess -> {
 			jmsMessage.setIntProperty("JMS_IBM_MQMD_MsgType", 1);
-			messageSenderTime = Instant.now();
-
+			
 //    		System.out.println("jmsmessage from sendjmsMessage: "+jmsMessage);
 //			logger.info("Message Sender    msg send to DEV.QUEUE.1    corrId {} Time : {}",
 //					jmsMessage.getJMSCorrelationID(), messageSenderTime);

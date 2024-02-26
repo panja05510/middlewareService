@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties("savingsclosingbalancequeryresponse")
+
 public class ResponseBaseModel implements Serializable {
 
 private String apiName;

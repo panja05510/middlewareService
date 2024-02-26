@@ -1,0 +1,57 @@
+savingsclosingbalancequeryresponse:
+  apiName: savings closing balance query
+  resourceName: savings/closing-balance/query
+  queue: "DEV.QUEUE.1"
+  copybooks:
+    default:
+      responseType: error
+      copybookName: customer.cpy
+    2649:
+       responseType: success
+       copybookName: customer.cpy
+    3056:
+       responseType: error
+       copybookName: customer.cpy
+  cobolfieldsmap:
+    leaves:
+       SDSTMYM1-EXT-AMT: amount
+       SDSTMYM1-EXT-AMT-LIT: balanceType
+    parents:
+       - SDSTMYM1-EXT-AMT_INFO
+  mfResponseValuesMapping:
+        returnCode:
+          "00": SUCCESS
+          "01": INFO
+          "02": ERROR
+  error:
+    errorFieldnameMapping:
+      messageCode: TSMDA-MESSAGE-CODE
+      messageDesc: TSMDA-VARIABLE-1
+      errorCount: TSMDA-OCCURRENCE-IN-PROC
+      messageSeverity: TSMDA-HI-SEVERITY-CODE
+    validErrorMetadata:
+      errorCodes:
+        RM3510:
+          errorMessage: SAA1001:No account relationship found for the given request parameters.
+          httpStatus: 404
+        messageDescriptions: 
+          "STMEM RECORD NOT FOUND":
+             errorMessage: DAS1006:Account number not found
+             httpStatus: 404
+source: "deposit account closing balance query"
+Error_Fatel: "FATEL"
+
+error:
+  UNKNOWN_ERROR:
+    errorMessage: "Internal server error."
+    httpStatus: 500
+  NO_RESPONSE_PROVIDED_MSG:
+    errorMessage: "RES1001:No response from provider system."
+    httpStatus: 500
+    
+abend:
+  copybook: AbendError.cpy
+  copybookLength: 680
+  fieldnameMapping:
+    ACAA_INFO: abendErrorDetails
+ 

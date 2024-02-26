@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.citizens.mainframe.model.ResponseBaseModel;
 import com.citizens.mainframe.model.ResponseCBLModel;
 import com.citizens.mainframe.model.ResponseErrorModel;
+import com.citizens.mainframe.model.SavingsAccountDetails;
 
 import jakarta.jms.JMSException;
 
@@ -20,8 +21,7 @@ import java.util.Map;
 @Component
 public class RequestResponseHandler {
 	
-	@Autowired
-	private  MFRequestHandler mfRequestResponseHandler ;
+	
 	
 	@Autowired
 	ResponseErrorModel responseErrorModel;
@@ -42,14 +42,14 @@ public class RequestResponseHandler {
 	
 	
 	@Autowired
-	MessageSender sender;
+	MessageSender messageSender;
 	
 	@Autowired
 	private  MessageReceiver receiver;
 	
 	
 	
-	public String callMq() throws IOException, javax.jms.JMSException{
+	public String callMq( SavingsAccountDetails savingsAccountDetails) throws IOException, javax.jms.JMSException{
 		
 		
 		
@@ -148,7 +148,7 @@ public class RequestResponseHandler {
 		
 		
 		try {
-			String correlationId = sender.sendMessageToQueue();
+			String correlationId = messageSender.sendMessageToQueue(savingsAccountDetails);
 			System.out.println("Request Sent to mainframe with message ID :"+"/"+correlationId+"/ \n");
 			String response = receiver.receiveMessageByCorrelationId(correlationId, responseBaseModel);
 			return response;
