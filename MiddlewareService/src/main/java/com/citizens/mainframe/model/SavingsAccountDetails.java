@@ -15,6 +15,11 @@ public class SavingsAccountDetails {
 	public void setWithdrawalType(String withdrawalType) {
 		this.withdrawalType = withdrawalType;
 	}
+	@Override
+	public String toString() {
+		return "SavingsAccountDetails [accountNumber=" + accountNumber + ", withdrawalType=" + withdrawalType + "]";
+	}
+	
 	
 
 }

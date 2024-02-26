@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.jms.JMSException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +22,11 @@ public class MiddlewareServiceController {
 
 	
 	@PostMapping("/query" )
-	public String mainframeResponse(SavingsAccountDetails savingsAccountDetails) throws IOException, JMSException {
+	public String mainframeResponse( @RequestBody SavingsAccountDetails savingsAccountDetails) throws IOException, JMSException {
 		
-		
+		System.out.println(savingsAccountDetails.toString());
 		String obj=requestResponseHandler.callMq(savingsAccountDetails);
-		//System.out.println(obj);
+		 
 		return obj;
 		
 	}
