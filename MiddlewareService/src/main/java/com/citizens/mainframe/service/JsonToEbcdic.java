@@ -314,7 +314,7 @@ public class JsonToEbcdic {
 					fixedOutputEbcdic.append(convertFormat(cobolvalue, LATIN_1_CHARSET, EBCDIC_CHARSET));
 				}
 			}
-			return fixedOutputEbcdic.toString().getBytes(LATIN_1_CHARSET);
+			return fixedOutputEbcdic.toString().getBytes();
 		} catch (Exception ex) {
 			System.out.println("number format exception at JsonToEbcdic" + ex);
 			return null;
