@@ -98,10 +98,10 @@ public class RequestResponseHandler {
 			Map<String, String> errorFieldnameMapping = new HashMap<>();
 
 			// Adding entries to the map
-			errorFieldnameMapping.put("messageCode", "Error_Status");
-			errorFieldnameMapping.put("messageDesc", "Error_Message");
-			errorFieldnameMapping.put("errorCount", "ACAI_CHANNEL");
-			errorFieldnameMapping.put("messageSeverity", "ACAI_USER_ID");
+			errorFieldnameMapping.put("messageCode", "ERROR_STATUS");
+			errorFieldnameMapping.put("messageDesc", "ERROR_MESSAGE");
+			errorFieldnameMapping.put("errorCount", "ACAI-CHANNEL");
+			errorFieldnameMapping.put("messageSeverity", "ACAI-USER-ID");
 
 			responseErrorModel.setErrorFieldnameMapping(errorFieldnameMapping);
 
