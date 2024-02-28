@@ -104,7 +104,7 @@ public class EbcdicToJson {
 			}
 		}
 		// ABEND
-		abendError.setCopybookLength("680");
+		
 		if (ebcdicLength.equals(abendError.getCopybookLength())) {
 
 			error = getAbendErrorPayload(layout, line);

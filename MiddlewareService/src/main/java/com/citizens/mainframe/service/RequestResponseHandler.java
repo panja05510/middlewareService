@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.JmsException;
 import org.springframework.stereotype.Component;
 
+import com.citizens.mainframe.model.ResponseAbendError;
 import com.citizens.mainframe.model.ResponseBaseModel;
 import com.citizens.mainframe.model.ResponseCBLModel;
 import com.citizens.mainframe.model.ResponseErrorModel;
@@ -25,6 +26,9 @@ public class RequestResponseHandler {
 
 	@Autowired
 	ResponseCBLModel responseCBLModel;
+	
+	@Autowired
+	ResponseAbendError responseAbendError;
 	
 	@Autowired
 	ResponseBaseModel responseBaseModel;
@@ -123,8 +127,16 @@ public class RequestResponseHandler {
 			responseErrorModel.setValidErrorMetadata(validErrorMetadata);
 
 			responseBaseModel.setError(responseErrorModel);
+			Map<String, String> abendError= new HashMap<>();
+			abendError.put("ACAA_INFO", "abendErrorDetails");
+			responseAbendError.setfieldnameMapping(abendError);
+			responseAbendError.setCopybook("error.cpy");
+			responseAbendError.setCopybookLength("104");
+			
+			
 
 		}
+		
 
 		try {
 			String correlationId = messageSender.sendMessageToQueue(savingsAccountDetails);
