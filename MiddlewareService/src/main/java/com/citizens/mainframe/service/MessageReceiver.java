@@ -25,6 +25,8 @@ import java.util.Map;
 import jakarta.jms.BytesMessage;
 import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;
+import net.sf.cb2xml.walker.CopybookListnerAdapter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ public class MessageReceiver {
 	private final JmsTemplate jmsTemplate;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
 	public MessageReceiver(JmsTemplate jmsTemplate) {
 		this.jmsTemplate = jmsTemplate;
@@ -80,9 +83,22 @@ public class MessageReceiver {
 //			List<Map<String, String>> copybookToListOfHash = printCopybook(copybookToIntermediate);
 //			String convertToJSON = e2j.convertToJSON(bytes, copybookToListOfHash);
 			// return convertToJSON;
-			JsonObject json = ebcdicTojson.mainframe2json(bytes, responseBaseModel);
-			return json.toString();
-
+			if(bytes.length == 104) {
+				String json = "";
+				try {
+					List<HashMap<String, String>> copybookAsListOfMap = copybookParser.getCopybookAsListOfMap("customerError.cpy");
+					List<Map<String, String>> copybookAsListOfHashMap = printCopybook(copybookAsListOfMap);
+					json = e2j.convertToJSON(bytes, copybookAsListOfHashMap);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return json;
+			}
+			else {
+				JsonObject json = ebcdicTojson.mainframe2json(bytes, responseBaseModel);
+				return json.toString();
+			}
 		} else
 			return null;
 	}

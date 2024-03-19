@@ -67,8 +67,8 @@ public class RequestResponseHandler {
 			// Entry with key 3056
 			Map<String, String> entry3056 = new HashMap<>();
 			entry3056.put("responseType", "error");
-			entry3056.put("copybookName", "error.cpy");
-			copybooks.put("3056", entry3056);
+			entry3056.put("copybookName", "customerError.cpy");
+			copybooks.put("104", entry3056);
 			responseBaseModel.setCopybooks(copybooks);
 
 			Map<String, String> fieldMap = new HashMap<>();
